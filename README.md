@@ -7,3 +7,9 @@
 # Competitive Swarm Optimizer with Mutated Agents (CSOMA)
 The `CSOMA` repository offers the competitive swarm optimizer with mutated agents in both **Python** and **Matlab**.
 
+### General Information
+
+The `Python` codes are forked from the [`pyswarms` package](https://github.com/ljvmiranda921/pyswarms) with some minor modification.
+The `Matlab` codes are original.
+
+We also provide two additional applications (*in folders section 3.5 and section 3.6*) that use CSOMA algorithm.
