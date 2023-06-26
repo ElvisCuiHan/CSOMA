@@ -42,3 +42,102 @@ theta = [-0.50, -0.10, -0.18, -0.48, 0.74, -0.63, -0.96, 0.90, ...
 obj_fun = @(b)glm_fisher(b, theta);
 [value, design] = csoma(obj_fun, lb, ub, swarmsize, phi, maxiter);
 ```
+
+#### Python Codes
+
+For Python, we run the following chunk to obtain an optimal design via **CSOMA** in a trinomial dose-response model.
+
+```python
+import CSOMA as ps
+import pandas as pd
+import numpy as np
+import scipy.stats as stats
+import matplotlib.pyplot as plt
+from scipy.linalg import pinvh
+
+def info(dose, theta, delete_last=True):
+    """
+    This function computes the information matrix in a proportional odds model.
+    """
+    C_trans = np.array([[1, 0, -1, 0, 0], [0, 1, 0, -1, 0], [0, 0, 0, 0, 1]])
+    L = np.array([[1, 0, 0], [1, 1, 0], [0, 1, 1], [0, 0, 1], [1, 1, 1]])
+    #theta = np.array([2.5062, 7.8042, -0.9795, 0])
+    X = np.array([[1, 0, dose, 0], [0, 1, dose, 0], [0, 0, 0, 1]])
+    A = np.array([[1, 0, 0], [-1, 1, 0], [0, -1, 2]])
+    pi = A.dot(1 / (1 + np.exp(-X.dot(theta))))
+    D_inv = np.diag(1 / L.dot(pi))
+    M_inv = np.diag(1 / pi)
+    G = np.linalg.inv(C_trans.dot(D_inv).dot(L)).dot(X)
+    
+    Fi = G.T.dot(M_inv).dot(G)
+    
+    if delete_last:
+        return Fi[:-1, :-1]
+    else:
+        return Fi
+
+def compute_pi(dose):
+    theta = np.array([2.5062, 7.8004, -0.9791, 0])
+    X = np.array([[1, 0, dose, 0], [0, 1, dose, 0], [0, 0, 0, 1]])
+    A = np.array([[1, 0, 0], [-1, 1, 0], [0, -1, 2]])
+    pi = A.dot(1 / (1 + np.exp(-X.dot(theta))))
+
+    return pi
+
+def D_optim(b, **kwargs):
+    """D-optim design
+
+    Parameters
+    ----------
+    b : numpy.ndarray
+        sets of inputs shape :code:'(n_particles, dimensions)'
+        usually for a simple logistic model, dimension is 8.
+
+    Returns
+    ----------
+    numpy.ndarray
+        computed cost of size :code:'(n_particles, )'
+    """
+    theta, = kwargs.values()
+    #print(theta)
+
+    n, d = b.shape
+    loss = np.zeros(n)
+    
+    for i in range(n):
+        m = 1e-7 * np.eye(3) #np.zeros((3, 3))
+        x = b[i, :(d//2)]
+        p = b[i, (d//2):]
+        p = p / np.sum(p)
+        
+        for j in range((d//2)):
+            m += p[j] * info(x[j], theta) #p[j] * (ca.dot(ca.T))#
+            
+        #m = np.linalg.inv(m)
+        
+        loss[i] = np.linalg.det(m)
+        if p[-1] < 0:
+            loss[i] -= 1e200
+        
+    return -loss
+
+n = 10 # number of particles
+d = 6  # dimension of the problem
+b = np.random.random((n, d))
+low = 0
+upp = 12
+theta = np.array([2.5062, 7.8004, -0.9791, 0])
+
+bounds = [tuple(np.concatenate([[low] * (d//2), [0]* (d//2)])),
+          tuple(np.concatenate([[upp] * (d//2), [1]* (d//2)]))]
+
+options = {'c1': 0.5, 'c2': 0.3, 'w': .9, 'phi': .2}
+optimizer = ps.single.CSOMA(n_particles=n, dimensions=d, options=options, bounds=bounds)
+best_cost, best_pos = optimizer.optimize(D_optim, iters=500, theta=theta)
+best_pos[(d//2):] /= sum(best_pos[(d//2):])
+
+print("Design points:")
+print(np.round(best_pos[:(d//2)], 5))
+print("Design weights:")
+print(np.round(best_pos[(d//2):], 5))
+```
