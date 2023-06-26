@@ -16,6 +16,10 @@ We also provide two additional applications (*in folders section 3.5 and section
 
 ### Usage
 
+#### Matlab Codes
+
+In Matlab, we run the following codes to obtain a high dimensional [D-optimal design](https://en.wikipedia.org/wiki/Optimal_design). The function `glm_fisher` computes the log-determinant of the Fisher information in a [generalized linear model](https://en.wikipedia.org/wiki/Generalized_linear_model).
+
 ```matlab
 n = 210;
 lb = -ones(1, n);
