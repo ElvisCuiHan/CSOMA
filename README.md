@@ -32,7 +32,7 @@ and
 x^{t+1}_{j} = x^t_{j} + v^{t+1}_{j}
 ```
 
-where \(\mathbf{R}_1, \mathbf{R}_2, \mathbf{R}_3\) are all random vectors whose elements are drawn from \(U(0, 1)\); operation \(\odot\) represents element-wise multiplication; vector \(\bar{\mathbf{x}}^t\) is simply the swarm center at iteration \(t\); social factor \(\phi\) controls the influence of the neighboring particles to the loser, and a large value is helpful for enhancing swarm diversity (but possibly impacts convergence rate). This process iterates until some stopping criteria are met.
+where $\mathbf{R}_1, \mathbf{R}_2, \mathbf{R}_3$ are all random vectors whose elements are drawn from \(U(0, 1)\); operation \(\odot\) represents element-wise multiplication; vector \(\bar{\mathbf{x}}^t\) is simply the swarm center at iteration \(t\); social factor \(\phi\) controls the influence of the neighboring particles to the loser, and a large value is helpful for enhancing swarm diversity (but possibly impacts convergence rate). This process iterates until some stopping criteria are met.
 
 
 where $\mathbf{R}_1, \;\mathbf{R}_2, \;\mathbf{R}_3$ are all random vectors whose elements are drawn from $U(0, 1)$; operation $\otimes$ also represents element-wise multiplication; vector $\bar{\mathbf{x}}^t$ is simply the swarm center at iteration $t$; social factor $\phi$ controls the influence of the neighboring particles to the loser and a large value is helpful for enhancing swarm diversity (but possibly impacts convergence rate). 
