@@ -14,15 +14,13 @@ The `Matlab` codes are original.
 
 We also provide two additional applications (*in folders section 3.5 and section 3.6*) that use CSOMA algorithm.
 
-#### Introduction to CSO-MA
+### Introduction to CSO-MA
 
-Competitive Swarm Optimizer (CSO) is a relatively novel swarm-based algorithm that has been proven to be very effective in solving different types of optimization problems \citep{cheng2015competitive}. CSO has had successful applications to solve large and hard optimization problems. For example, Gu et al. \cite{gu2018feature} applied CSO to select variables for high-dimensional classification models, and Xiong et al. \cite{xiong2018orthogonal} used CSO to study a power system economic dispatch, which is typically a complex nonlinear multivariable strongly coupled optimization problem with equality and inequality constraints.
+[Competitive Swarm Optimizer (CSO)](https://ieeexplore.ieee.org/document/6819057) is a relatively novel swarm-based algorithm that has been proven to be very effective in solving different types of optimization problems. CSO has had successful applications to solve large and hard optimization problems. For example, [Gu et al.](https://link.springer.com/article/10.1007/s00500-016-2385-6) applied CSO to select variables for high-dimensional classification models, and [Xiong et al.](https://www.sciencedirect.com/science/article/abs/pii/S1568494618300784) used CSO to study a power system economic dispatch, which is typically a complex nonlinear multivariable strongly coupled optimization problem with equality and inequality constraints.
 
-## Algorithm Description
+#### CSO Algorithm Description
 
 The Competitive Swarm Optimizer algorithm, or CSO for short, minimizes a given function $\mathbf{x}$ over a user-specified compact space $\boldsymbol{\Omega}$ by first generating a set of candidate solutions. In our case, they take the form of a swarm of `n` particles at positions $\mathbf{x}_1, \cdots, \mathbf{x}_n$, along with their corresponding random velocities $\mathbf{v}_1, \cdots, \mathbf{v}_n$.
-
-
 
 After the initial swarm is generated, at each iteration we randomly divide the swarm into $\left \lfloor \frac{n}{2} \right \rfloor$ pairs and compare their objective function values. We identify $\mathbf{x}^t_i$ as the winner and \(\mathbf{x}^t_j\) as the loser if these two are competed at the iteration $t$ and $\mathbf{x}^t_i < \mathbf{x}^t_j$. The winner retains the status quo, and the loser learns from the winner. The two defining equations for CSO are:
 
@@ -34,11 +32,16 @@ and
 x^{t+1}_{j} = x^t_{j} + v^{t+1}_{j}
 ```
 
-where $\mathbf{R}_1, \mathbf{R}_2, \mathbf{R}_3$ are all random vectors whose elements are drawn from $U(0, 1)$; operation $\odot$ represents element-wise multiplication; vector \(\bar{\mathbf{x}}^t\) is simply the swarm center at iteration \(t\); social factor \(\phi\) controls the influence of the neighboring particles to the loser, and a large value is helpful for enhancing swarm diversity (but possibly impacts convergence rate). This process iterates until some stopping criteria are met.
+where $\mathbf{R}_1, \mathbf{R}_2, \mathbf{R}_3$ are all random vectors whose elements are drawn from $U(0, 1)$; operation $\odot$ represents element-wise multiplication; vector $\bar{\mathbf{x}}^t$ is simply the swarm center at iteration $t$; social factor $\phi$ controls the influence of the neighboring particles to the loser, and a large value is helpful for enhancing swarm diversity (but possibly impacts convergence rate). This process iterates until some stopping criteria are met.
 
 
-where $\mathbf{R}_1, \;\mathbf{R}_2, \;\mathbf{R}_3$ are all random vectors whose elements are drawn from $U(0, 1)$; operation $\otimes$ also represents element-wise multiplication; vector $\bar{\mathbf{x}}^t$ is simply the swarm center at iteration $t$; social factor $\phi$ controls the influence of the neighboring particles to the loser and a large value is helpful for enhancing swarm diversity (but possibly impacts convergence rate). 
-This process iterates until some stopping criteria are met.
+where $\mathbf{R}_1, \;\mathbf{R}_2, \;\mathbf{R}_3$ are all random vectors whose elements are drawn from $U(0, 1)$; operation $\otimes$ also represents element-wise multiplication; vector $\bar{\mathbf{x}}^t$ is simply the swarm center at iteration $t$; social factor $\phi$ controls the influence of the neighboring particles to the loser and a large value is helpful for enhancing swarm diversity (but possibly impacts convergence rate).  This process iterates until some stopping criteria are met.
+
+#### CSOMA Description
+
+An improvement on CSO and we call it the enhanced version, [**Competitive Swarm Optimizer with Mutated Agents**](https://link.springer.com/article/10.1007/s12293-020-00305-6) or, in short, **CSO-MA**. After pairing up the swarm in groups of two at each iteration, we randomly choose a loser particle $p$ as an agent, randomly pick a variable indexed as $q$ and then randomly change the value of $\mathbf{x}_{pq}$ to either $\mathbf{xmax}_{q}$ or $\mathbf{xmin}_q$, where $\mathbf{xmax}_q$ and $\mathbf{xmin}_q$ represent, respectively, the upper bound and lower bound of the $q$-th variable. If the current optimal value is already close to the global optimum, this change will not hurt since we implement this experiment on a loser particle, which is not leading the movement for the whole swarm; otherwise, this chosen agent restarts a journey from the boundary and has a chance to escape from a local optimum.  
+
+The computational complexity of CSO is $\mathcal{O}(nD)$, where $n$ is the swarm size and $D$ is the dimension of the problem. Since our modification only adds one coordinate mutation operation to each particle, its computational complexity is the same as that of CSO. The improved performance of CSO-MA over CSO-MA to find the optimum for many complex multi-dimensional benchmark functions has been validated.
 
 ### Usage
 
