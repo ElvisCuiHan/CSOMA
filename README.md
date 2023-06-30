@@ -24,7 +24,7 @@ The Competitive Swarm Optimizer algorithm, or CSO for short, minimizes a given f
 
 After the initial swarm is generated, at each iteration we randomly divide the swarm into \(\left \lfloor \frac{n}{2} \right \rfloor\) pairs and compare their objective function values. We identify \(\mathbf{x}^t_i\) as the winner and \(\mathbf{x}^t_j\) as the loser if these two are competed at the iteration \(t\) and \(f(\mathbf{x}^t_i) < f(\mathbf{x}^t_j)\). The winner retains the status quo, and the loser learns from the winner. The two defining equations for CSO are:
 
-v^{t+1}_{j} = R_1 ⊙ v^t_{j} + R_2 ⊙ (x^t_{i} - x^t_{j}) + φR_3 ⊙ (x̄^t - x^t_{j})
+$$v^{t+1}_{j} = R_1 ⊙ v^t_{j} + R_2 ⊙ (x^t_{i} - x^t_{j}) + φR_3 ⊙ (x̄^t - x^t_{j})$$
 
 and
 
