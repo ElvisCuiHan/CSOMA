@@ -14,6 +14,24 @@ The `Matlab` codes are original.
 
 We also provide two additional applications (*in folders section 3.5 and section 3.6*) that use CSOMA algorithm.
 
+#### Introduction to CSO-MA
+
+Competitive Swarm Optimizer (CSO) is a relatively novel swarm-based algorithm that has been proven to be very effective in solving different types of optimization problems \citep{cheng2015competitive}. CSO   has had successful applications to solve large and hard optimization problems. For example, \cite{gu2018feature} applied CSO to select variables for high-dimensional classification models, and \cite{xiong2018orthogonal} used CSO to study a power system economic dispatch, which is typically a complex nonlinear multivariable strongly coupled optimization problem with equality and inequality constraints.
+
+Competitive Swarm Optimizer algorithm, or CSO for short,  minimizes a given  function $f(\mathbf{x})$ over a user-specified compact space $\boldsymbol{\Omega}$ by first generating a set of candidate solutions.  In our case, they take the form of a swarm of $n$ particles at positions $\mathbf{x}_1, \;\cdots, \;\mathbf{x}_n$, along with their corresponding random velocities $\mathbf{v}_1, \;\cdots, \;\mathbf{v}_n$.  
+
+After the initial swarm is generated, at each iteration we randomly divide the swarm into $\left \lfloor \frac{n}{2} \right \rfloor$ pairs and compare their objective function values. We identify $\mathbf{x}^t_i$ as the winner and $\mathbf{x}^t_j$ as the loser if these two are competed at the iteration $t$ and $f(\mathbf{x}^t_i) < f(\mathbf{x}^t_j)$. The winner retains the status quo and the loser learns from the winner. The two defining equations for CSO are 
+\begin{equation}
+\label{equation: CSO_1}
+\mathbf{v}^{t+1}_{j} = \mathbf{R}_1 \otimes \mathbf{v}^t_{j} + \mathbf{R}_2 \otimes (\mathbf{x}^t_{i} - \mathbf{x}^t_{j}) +\phi\mathbf{R}_3 \otimes (\bar{\mathbf{x}}^t - \mathbf{x}^t_{j})
+\end{equation}
+\begin{equation}
+\label{equation: CSO_2}
+\noindent \text{and}~\mathbf{x}^{t+1}_{j} = \mathbf{x}^t_{j} + \mathbf{v}^{t+1}_{j},
+\end{equation}
+where $\mathbf{R}_1, \;\mathbf{R}_2, \;\mathbf{R}_3$ are all random vectors whose elements are drawn from $U(0, 1)$; operation $\otimes$ also represents element-wise multiplication; vector $\bar{\mathbf{x}}^t$ is simply the swarm center at iteration $t$; social factor $\phi$ controls the influence of the neighboring particles to the loser and a large value is helpful for enhancing swarm diversity (but possibly impacts convergence rate). 
+This process iterates until some stopping criteria are met.
+
 ### Usage
 
 #### Matlab Codes
