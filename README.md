@@ -22,6 +22,7 @@ Competitive Swarm Optimizer (CSO) is a relatively novel swarm-based algorithm th
 
 The Competitive Swarm Optimizer algorithm, or CSO for short, minimizes a given function \(f(\mathbf{x})\) over a user-specified compact space \(\boldsymbol{\Omega}\) by first generating a set of candidate solutions. In our case, they take the form of a swarm of \(n\) particles at positions \(\mathbf{x}_1, \cdots, \mathbf{x}_n\), along with their corresponding random velocities \(\mathbf{v}_1, \cdots, \mathbf{v}_n\).
 
+
 After the initial swarm is generated, at each iteration we randomly divide the swarm into \(\left \lfloor \frac{n}{2} \right \rfloor\) pairs and compare their objective function values. We identify \(\mathbf{x}^t_i\) as the winner and \(\mathbf{x}^t_j\) as the loser if these two are competed at the iteration \(t\) and \(f(\mathbf{x}^t_i) < f(\mathbf{x}^t_j)\). The winner retains the status quo, and the loser learns from the winner. The two defining equations for CSO are:
 
 ```math
