@@ -16,8 +16,8 @@
 % K: Number of Gaussian quadratures.
 % S: Number of different y-samples to approximate the expectation.
 N = 5;
-K = 50;
-S = 5;
+K = 10;
+S = 50;
 
 % Below are hyper-parameters for Wishart, Gaussian and Gamma distributions.
 Omega = [0.26, 0, 0; 0, 2.5, 0; 0, 0, 2.5];
