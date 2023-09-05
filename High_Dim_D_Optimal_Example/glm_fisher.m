@@ -35,8 +35,8 @@ function sf = single_fisher(b, p, theta)
     x = [1 x1 x2 x3 x4 x5 x1*x2 x1*x3 x1*x4 x1*x5 x2*x3 x2*x4 x2*x5 ...
         x3*x4 x3*x5 x4*x5];
     eta = x * theta;
-    w = logit_weight(eta);
-    %w = poisson_reg_weight(eta);
+    %w = logit_weight(eta);
+    w = poisson_reg_weight(eta);
     sf = (p * w) * (x' * x);
 end
 

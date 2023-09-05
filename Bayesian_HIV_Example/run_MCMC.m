@@ -16,7 +16,7 @@
 % K: Number of Gaussian quadratures.
 % S: Number of different y-samples to approximate the expectation.
 N = 5;
-K = 50;
+K = 5;
 S = 5;
 
 % Below are hyper-parameters for Wishart, Gaussian and Gamma distributions.
@@ -28,19 +28,21 @@ alpha = 4.5;
 beta = 9.0;
 
 % Below are parameters for the Markov chain.
-num_mu = 4 ;
+num_mu = 4;
 burnin = 20 ;
 thinning = 2;
 
-% Below are two candidate designs in Hans and Chaloner (2004)
+% Below are some candidate designs in Hans and Chaloner (2004) for
+% comparison purposes.
 
 %t1 = [0, 0, 0.083, 0.167, 0.417, 0.667, 0.917, 1.167, 1.417, 1.667, 1.917, 2.917, 3.917, 4.917, 5.917, 6.917];
 %t2 = [0, 0, 0.083, 0.167, 0.417, 0.667, 0.917, 1.167, 1.417, 1.667, 1.917, 2, 2.917, 3, 6.834, 6.917];
+%t5 = [0, 0, 0.021, 0.042, 0.083, 0.125, 0.167, 0.417, 0.667, 0.917, 1.167, 1.417, 1.667, 1.917, 2.917, 6.917];
 
 % num_t: Length of the design (set to 16 in our paper).
 % max_t: Maximum of designed time point (7 in our paper).
 % upper_t: Upper bound for CSO-MA.
-% lower_t: Loewr bound for CSO-MA.
+% lower_t: Lower bound for CSO-MA.
 % swarmsize: Size of swarm (16 is sufficient to get reasonable results).
 % phi: tuning parameter in CSO-MA (see https://link.springer.com/article/10.1007/s12293-020-00305-6).
 % max_iter: Number of iterations for CSO-MA.
